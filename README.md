@@ -1,17 +1,18 @@
-# CurioStar — client consultation version
+# CurioStar
 
-This version keeps the original CurioStar design and adds:
-- Client account creation/sign-in
-- Consultation submission
-- Client-only consultation history
-- Replies shown inside the website
-- Admin consultation inbox
-- Admin reply editor
+CurioStar is an astrology consultation website where clients can submit questions and view replies from the administrator.
 
-## Free setup
+## Features
 
-The website frontend can be hosted on GitHub Pages. The data/auth backend uses Supabase.
+- Client registration and login
+- Astrology consultation submissions
+- Admin consultation dashboard
+- Replies between admin and clients
+- Supabase database integration
 
+## Hosting
+
+This website can be hosted using GitHub Pages, with Supabase providing authentication and database services.
 ### 1. Create your Supabase project
 Create a project at https://supabase.com/
 
@@ -71,3 +72,7 @@ http://localhost:8000
 ## Important
 The frontend is static; Supabase provides the secure authentication/database layer.
 Do not put private Supabase service-role keys in the website.
+=======
+# curiostar-website
+CurioStar astrology consultation website
+>>>>>>> 7212a52dc8e7fe11e1dd2573869c08df4bebbe27
