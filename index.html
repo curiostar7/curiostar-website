@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CurioStar — Discover What Makes You, You</title>
+  <meta name="description" content="A fun astrology experience to explore your personality, past patterns and what may lie ahead.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <nav class="nav">
+    <a class="logo" href="#home">✦ CurioStar</a>
+    <div class="nav-links">
+      <a href="#discover">Discover</a>
+      <a href="#account">Account</a>
+      <a href="#how">How It Works</a>
+      <a href="#about">About</a>
+      <a href="#explore">Explore</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section id="home" class="hero">
+  <div class="hero-content">
+    <p class="eyebrow">ASTROLOGY • CURIOSITY • SELF-DISCOVERY</p>
+    <h1>Ever wondered<br><span>why you are you?</span></h1>
+    <p class="hero-text">
+      Enter your birth details and take a fun little journey through your personality,
+      past patterns and what the stars traditionally say about what may be ahead.
+    </p>
+    <div class="buttons">
+      <a class="btn primary" href="#discover">Discover Yourself ✨</a>
+      <a class="btn secondary" href="#how">How does it work?</a>
+    </div>
+  </div>
+  <div class="star-card">
+    <div class="orbit">☾</div>
+    <div class="floating">✦</div>
+    <h3>Your story is written in the stars.</h3>
+    <p>Not a prediction machine. Just a playful way to explore astrology and yourself.</p>
+  </div>
+</section>
+
+<section id="discover" class="section discover">
+  <div class="section-heading">
+    <p class="eyebrow">LET'S GET CURIOUS</p>
+    <h2>What do you want to discover?</h2>
+    <p>Start with your birth details. No complicated astrology knowledge required.</p>
+  </div>
+
+  <form id="discoverForm" class="form">
+    <div class="grid">
+      <label>Your name
+        <input id="name" type="text" required placeholder="What should we call you?">
+      </label>
+      <label>Date of birth
+        <input id="dob" type="date" required>
+      </label>
+    </div>
+
+    <div class="grid">
+      <label>Time of birth
+        <input id="tob" type="time" required>
+      </label>
+      <label>Place of birth
+        <input id="pob" type="text" required placeholder="City, State, Country">
+      </label>
+    </div>
+
+    <label>I'm curious about...
+      <select id="interest" required>
+        <option value="">Pick one</option>
+        <option>My personality</option>
+        <option>My past patterns</option>
+        <option>What may be ahead</option>
+        <option>Love & relationships</option>
+        <option>Career & money</option>
+        <option>Everything — surprise me ✨</option>
+      </select>
+    </label>
+
+    <button class="btn primary" type="submit">Start My Astro Journey ✨</button>
+    <p class="form-note">Your details are used to create your curiosity request. This site is for entertainment and personal reflection.</p>
+  </form>
+
+  <div id="result" class="result hidden"></div>
+</section>
+
+
+<section id="account" class="section account">
+  <div class="section-heading">
+    <p class="eyebrow">YOUR CURIOSTAR ACCOUNT</p>
+    <h2>Keep your consultation in one place.</h2>
+    <p>Create an account to send your question and receive your personal reply directly on CurioStar.</p>
+  </div>
+
+  <div class="account-grid">
+    <div class="form" id="authBox">
+      <h3 id="authTitle">Create / Sign in</h3>
+      <label>Email
+        <input id="authEmail" type="email" required placeholder="you@example.com">
+      </label>
+      <label>Password
+        <input id="authPassword" type="password" required placeholder="At least 6 characters">
+      </label>
+      <div class="buttons">
+        <button class="btn primary" id="signUpBtn" type="button">Create account</button>
+        <button class="btn secondary" id="signInBtn" type="button">Sign in</button>
+        <button class="btn secondary hidden" id="signOutBtn" type="button">Sign out</button>
+      </div>
+      <p id="authMessage" class="form-note"></p>
+    </div>
+
+    <div class="form hidden" id="clientPanel">
+      <h3>Send a consultation</h3>
+      <p class="form-note">Your birth details are sent securely to your CurioStar account so you can receive a reply here.</p>
+      <label>Your name
+        <input id="clientName" type="text" placeholder="Your name">
+      </label>
+      <div class="grid">
+        <label>Date of birth
+          <input id="clientDob" type="date">
+        </label>
+        <label>Time of birth
+          <input id="clientTob" type="time">
+        </label>
+      </div>
+      <label>Place of birth
+        <input id="clientPob" type="text" placeholder="City, State, Country">
+      </label>
+      <label>Your question
+        <textarea id="clientQuestion" rows="5" placeholder="What would you like to explore?"></textarea>
+      </label>
+      <button class="btn primary" id="submitConsultation" type="button">Send to CurioStar ✨</button>
+      <p id="consultMessage" class="form-note"></p>
+    </div>
+
+    <div class="form hidden" id="clientReplies">
+      <h3>Your consultation</h3>
+      <div id="clientRequests"><p class="form-note">Loading...</p></div>
+    </div>
+
+    <div class="form hidden" id="adminPanel">
+      <div class="admin-head">
+        <div>
+          <p class="eyebrow">ADMIN</p>
+          <h3>Consultation inbox</h3>
+        </div>
+        <button class="btn secondary" id="refreshAdmin" type="button">Refresh</button>
+      </div>
+      <div id="adminRequests"><p class="form-note">Loading...</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="section">
+  <div class="section-heading">
+    <p class="eyebrow">THREE LITTLE STEPS</p>
+    <h2>How the curiosity journey works</h2>
+  </div>
+  <div class="cards">
+    <article class="card">
+      <div class="number">01</div>
+      <h3>Tell us when you arrived</h3>
+      <p>Enter your date, time and place of birth. These are the basics used to create a birth chart.</p>
+    </article>
+    <article class="card">
+      <div class="number">02</div>
+      <h3>Explore your personality</h3>
+      <p>Discover traditional astrological interpretations about your tendencies, strengths and quirks.</p>
+    </article>
+    <article class="card">
+      <div class="number">03</div>
+      <h3>Look around your timeline</h3>
+      <p>Explore themes connected with your past and possible future periods — just for curiosity.</p>
+    </article>
+  </div>
+</section>
+
+<section id="explore" class="section explore">
+  <div class="section-heading">
+    <p class="eyebrow">YOUR ASTRO CURIOSITY MENU</p>
+    <h2>Pick a rabbit hole 🐇</h2>
+  </div>
+  <div class="topic-grid">
+    <div><span>🪞</span><h3>Personality</h3><p>Why do you react the way you do?</p></div>
+    <div><span>🕰️</span><h3>Past Patterns</h3><p>What themes keep showing up?</p></div>
+    <div><span>🔭</span><h3>What's Ahead</h3><p>What themes might the next chapter bring?</p></div>
+    <div><span>💫</span><h3>Relationships</h3><p>Explore your relationship style.</p></div>
+    <div><span>🚀</span><h3>Career</h3><p>Discover traditional career tendencies.</p></div>
+    <div><span>🌙</span><h3>Just Curious</h3><p>Explore your chart without a specific question.</p></div>
+  </div>
+</section>
+
+<section id="about" class="section about">
+  <div>
+    <p class="eyebrow">WHY CURIOSTAR?</p>
+    <h2>Astrology doesn't have to feel complicated.</h2>
+  </div>
+  <div>
+    <p>
+      CurioStar is designed as a playful introduction to astrology. You don't need to know
+      houses, planets or complicated terminology before you start.
+    </p>
+    <p>
+      Think of it as a conversation starter about yourself — something interesting to explore,
+      question and enjoy.
+    </p>
+    <p class="note">
+      Astrology is not scientifically established as a method for predicting personality or future
+      events. Use the experience for entertainment, curiosity and personal reflection, and don't
+      use it as a substitute for professional medical, legal or financial advice.
+    </p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>© 2026 CurioStar • Made for curious minds ✦</p>
+</footer>
+
+<!-- Supabase client. Create a free Supabase project and add its URL/key in script.js. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
+</body>
+</html>
