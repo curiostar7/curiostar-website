@@ -82,10 +82,11 @@ $("submitConsultation")?.addEventListener("click", async ()=>{
     tob:$("clientTob").value || null,
     pob:$("clientPob").value.trim(),
     question:$("clientQuestion").value.trim(),
+    transaction_reference:$("paymentReference").value.trim(),
     status:"new"
   };
-  if(!payload.name || !payload.dob || !payload.tob || !payload.pob || !payload.question)
-    return msg("consultMessage","Please fill in all fields.");
+  if(!payload.name || !payload.dob || !payload.tob || !payload.pob || !payload.question || !payload.transaction_reference)
+  return msg("consultMessage","Please fill in all fields, including your UPI transaction reference.");
   const {error}=await sb.from("consultations").insert(payload);
   msg("consultMessage",error ? error.message : "Your consultation has been sent. You can see replies here.");
   if(!error){ $("clientQuestion").value=""; await loadClientRequests(user.id); }
@@ -109,20 +110,73 @@ async function loadClientRequests(uid){
 async function loadAdminRequests(){
   const box=$("adminRequests");
   if(!box || !sb) return;
-  const {data,error}=await sb.from("consultations").select("id,user_id,name,dob,tob,pob,question,reply,status,created_at").order("created_at",{ascending:false});
-  if(error){box.innerHTML=`<p class="form-note">${escapeHtml(error.message)}</p>`;return;}
-  if(!data?.length){box.innerHTML='<p class="form-note">No client requests yet.</p>';return;}
+
+  const {data,error}=await sb.from("consultations")
+    .select("id,user_id,name,dob,tob,pob,question,reply,status,created_at,payment_status,payment_verified_at")
+    .order("created_at",{ascending:false});
+
+  if(error){
+    box.innerHTML=`<p class="form-note">${escapeHtml(error.message)}</p>`;
+    return;
+  }
+
+  if(!data?.length){
+    box.innerHTML='<p class="form-note">No client requests yet.</p>';
+    return;
+  }
+
   box.innerHTML=data.map(r=>`
     <div class="request">
-      <strong>${escapeHtml(r.name)} <span class="status">${escapeHtml(r.status||"new")}</span></strong>
-      <div class="meta">${escapeHtml(r.dob||"")} ${escapeHtml(r.tob||"")} • ${escapeHtml(r.pob||"")} • ${escapeHtml(r.created_at||"")}</div>
+      <strong>${escapeHtml(r.name)}
+        <span class="status">${escapeHtml(r.status||"new")}</span>
+      </strong>
+      <div class="meta">
+        ${escapeHtml(r.dob||"")} ${escapeHtml(r.tob||"")} •
+        ${escapeHtml(r.pob||"")} • ${escapeHtml(r.created_at||"")}
+      </div>
+      <p><strong>Payment:</strong>
+        ${escapeHtml(r.payment_status||"pending")}
+      </p>
+      ${r.payment_status==="paid"
+        ? '<p class="form-note">Payment verified.</p>'
+        : `<button class="btn secondary verify-payment" data-id="${r.id}" type="button">Mark ₹50 as paid</button>`}
       <div class="question">${escapeHtml(r.question)}</div>
       <div class="reply-box">
         <textarea id="reply-${r.id}" placeholder="Write your reply here...">${escapeHtml(r.reply||"")}</textarea>
         <button class="btn primary save-reply" data-id="${r.id}" type="button">Save reply</button>
       </div>
     </div>`).join("");
-  box.querySelectorAll(".save-reply").forEach(btn=>btn.addEventListener("click",()=>saveReply(btn.dataset.id)));
+
+  box.querySelectorAll(".verify-payment").forEach(btn=>{
+    btn.addEventListener("click",()=>markPaymentPaid(btn.dataset.id));
+  });
+
+  box.querySelectorAll(".save-reply").forEach(btn=>{
+    btn.addEventListener("click",()=>saveReply(btn.dataset.id));
+  });
+}
+
+async function markPaymentPaid(id){
+  if(!sb) return;
+
+  if(!confirm("Have you checked your UPI app and confirmed receipt of ₹50 for this consultation?")){
+    return;
+  }
+
+  const {error}=await sb.from("consultations")
+    .update({
+      payment_status:"paid",
+      payment_verified_at:new Date().toISOString()
+    })
+    .eq("id",id);
+
+  if(error){
+    alert("Could not update payment status: "+error.message);
+    return;
+  }
+
+  alert("Payment marked as verified.");
+  await loadAdminRequests();
 }
 
 async function saveReply(id){

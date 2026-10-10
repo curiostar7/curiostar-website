@@ -133,8 +133,31 @@
       <label>Your question
         <textarea id="clientQuestion" rows="5" placeholder="What would you like to explore?"></textarea>
       </label>
-      <button class="btn primary" id="submitConsultation" type="button">Send to CurioStar ✨</button>
-      <p id="consultMessage" class="form-note"></p>
+      
+<div class="payment-box">
+  <h3>Consultation fee: ₹50</h3>
+  <p>Scan this QR code using your UPI app and pay ₹50.</p>
+  <img
+    src="images/Qr%20code.jpeg"
+    alt="UPI payment QR code"
+    style="display:block;width:220px;max-width:100%;margin:16px auto;"
+  >
+  <label>UPI transaction reference number
+    <input
+      id="paymentReference"
+      type="text"
+      placeholder="Enter your UPI transaction ID"
+      required
+    >
+  </label>
+  <p class="form-note">Your payment will be checked manually before your consultation is answered.</p>
+</div>
+
+<button class="btn primary" id="submitConsultation" type="button">
+  Submit Consultation
+</button>
+<p id="consultMessage" class="form-note"></p>
+
     </div>
 
     <div class="form hidden" id="clientReplies">
